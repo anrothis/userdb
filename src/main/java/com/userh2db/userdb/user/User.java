@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name = "User")
 @Table
 public class User implements Serializable
 {
@@ -23,7 +23,7 @@ public class User implements Serializable
 	@SequenceGenerator(
 		name = "user_sequence",
 		sequenceName = "user_sequence",
-		allocationSize = 5
+		allocationSize = 1
 	)
 	@GeneratedValue(
 		strategy = GenerationType.AUTO,

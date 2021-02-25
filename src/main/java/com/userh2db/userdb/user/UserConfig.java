@@ -16,7 +16,7 @@ public class UserConfig {
             User sebastian = new User(
 				"Sebastian",
 				"Riedel",
-				"riedel-sebastian@t-online.de"
+				"rs@t-online.de"
 			);
             User juli = new User(
 				"Juli",
