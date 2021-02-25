@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity(name = "User")
+@Entity(name = "User") 
 @Table
 public class User implements Serializable
 {
@@ -29,13 +29,13 @@ public class User implements Serializable
 		strategy = GenerationType.AUTO,
 		generator = "user_sequence"
 	)
-	@Column
+	@Column(name = "ID",nullable = false, unique = true)
     private Long id;
-    @Column
+    @Column(name = "Vorname", nullable = false, columnDefinition = "Text")
 	private String forename;
-    @Column
+    @Column(name = "Nachname", nullable = false, columnDefinition = "Text")
 	private String surename;
-	@Column(nullable = false)
+	@Column(name = "Email", nullable = false, columnDefinition = "VARCHAR", unique = true)
     private String email;
 	
 	public User() {}
