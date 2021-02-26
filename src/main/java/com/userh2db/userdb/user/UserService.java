@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.hibernate.jdbc.Expectation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 @Service
@@ -31,17 +33,20 @@ public class UserService {
 	 	Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
 		if (userByEmail.isPresent())
 		{
-			throw new IllegalStateException("Email already in DB!");
+			throw new IllegalStateException();
 		}
 		userRepository.save(user);
 	}
+	
 	public void deleteUser(Long userId) {
 		boolean exists = userRepository.existsById(userId);
+				
 		if(!exists){
-			throw new IllegalStateException("No user with ID: " + userId + " found!");
+			throw new IllegalStateException();
 		}
 		userRepository.deleteById(userId);
 	}
+
 	public List<User> getUserByForename(String forename) {
 		return userRepository.findByForename(forename);
 	}
