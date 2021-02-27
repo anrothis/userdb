@@ -71,7 +71,13 @@ public class UserController {
     public void updateUser(@PathVariable("userId") Long userId, 
                             @RequestParam(required = false) String forename,
                             @RequestParam(required = false) String surename,
-                            @RequestParam(required = false) String email) {
-        userService.updateUser(userId, forename, surename, email);        
+                            @RequestParam(required = false) String email,
+                            HttpServletRequest response) {
+        
+        try {
+            userService.updateUser(userId, forename, surename, email);
+        } catch (IllegalStateException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with ID: " + userId + " found!");
+        }        
     }
 }

@@ -46,10 +46,10 @@ public class UserService {
 	}
 
 	public List<User> getUserByForename(String forename) {
-		return userRepository.findByForename(forename);
+		return userRepository.findByForenameOrderBySurenameAsc(forename);
 	}
 	public List<User> getUserBySurename(String surename) {
-		return userRepository.findBySurename(surename);
+		return userRepository.findBySurenameOrderByForenameAsc(surename);
 	}
 
 	@Transactional

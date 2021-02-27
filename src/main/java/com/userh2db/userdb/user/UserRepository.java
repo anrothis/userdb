@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>{
 
     @Query("SELECT u FROM User u WHERE u.email = ?1")
     Optional<User> findUserByEmail(String email);
@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.forename,u.surename FROM User u")
     List<String> listUsers();
 
-	List<User> findByForename(String forename);
+	List<User> findByForenameOrderBySurenameAsc(String forename);
     
-    List<User> findBySurename(String surename);
+    List<User> findBySurenameOrderByForenameAsc(String surename);
 }
