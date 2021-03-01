@@ -19,19 +19,26 @@ public class UserService {
 	{
 		this.userRepository = userRepository;
 	}
+	
+	public List<User> getUserByForename(String forename) {
+		return userRepository.findByForenameOrderBySurenameAsc(forename);
+	}
+	public List<User> getUserBySurename(String surename) {
+		return userRepository.findBySurenameOrderByForenameAsc(surename);
+	}
     public List<String> getUser()
 	{
 		return userRepository.listUsers();
 	}
-
 	public List<User> getUserRich() {
 		return userRepository.findAll();
 	}
+
 	public void addNewUser(User user) {
 	 	Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
 		if (userByEmail.isPresent())
 		{
-			throw new IllegalStateException();
+			throw new EmailAlreadyTakenException(user.getEmail());
 		}
 		userRepository.save(user);
 	}
@@ -40,21 +47,15 @@ public class UserService {
 		boolean exists = userRepository.existsById(userId);
 				
 		if(!exists){
-			throw new IllegalStateException();
+			throw new UserNotFoundException(userId);
 		}
 		userRepository.deleteById(userId);
 	}
 
-	public List<User> getUserByForename(String forename) {
-		return userRepository.findByForenameOrderBySurenameAsc(forename);
-	}
-	public List<User> getUserBySurename(String surename) {
-		return userRepository.findBySurenameOrderByForenameAsc(surename);
-	}
 
 	@Transactional
 	public void updateUser(Long userId, String forename, String surename, String email) {
-		User user = userRepository.findById(userId).orElseThrow(()-> new IllegalStateException("No user with ID: " + userId + " found!"));
+		User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(userId));
 		
 		if (forename != null && forename.length() > 0 && !Objects.equals(user.getForename(), forename))
 		{
@@ -72,7 +73,7 @@ public class UserService {
 			}
 			else
 			{
-				throw new IllegalStateException("Email already taken!");
+				throw new EmailAlreadyTakenException(email);
 			}
 		}
 	}

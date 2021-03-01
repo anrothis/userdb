@@ -51,20 +51,22 @@ public class UserController {
 
     @PostMapping
     public void registerNewUser(@RequestBody User user, HttpServletRequest response) {
-        try{
-            userService.addNewUser(user);
-        } catch (IllegalStateException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already taken!");
-        }
+        userService.addNewUser(user);
+        // try{
+        //     userService.addNewUser(user);
+        // } catch (IllegalStateException e) {
+        //     throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already taken!");
+        // }
     }
     
     @DeleteMapping(path = "{userId}")
     public void deleteUser(@PathVariable("userId") Long userId, HttpServletRequest response) {
-        try {
-            userService.deleteUser(userId);
-        } catch (IllegalStateException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with ID: " + userId + " found!");
-        }
+        userService.deleteUser(userId);
+        // try {
+        //     userService.deleteUser(userId);
+        // } catch (IllegalStateException e) {
+        //     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with ID: " + userId + " found!");
+        // }
     }
 
     @PutMapping(path = "{userId}")
@@ -74,10 +76,12 @@ public class UserController {
                             @RequestParam(required = false) String email,
                             HttpServletRequest response) {
         
-        try {
-            userService.updateUser(userId, forename, surename, email);
-        } catch (IllegalStateException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with ID: " + userId + " found!");
-        }        
+        userService.updateUser(userId, forename, surename, email);
+
+        // try {
+        //     userService.updateUser(userId, forename, surename, email);
+        // } catch (IllegalStateException e) {
+        //     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with ID: " + userId + " found!");
+        // }        
     }
 }
